@@ -2,11 +2,16 @@
 
 public class ValidatorHelperTests
 {
-    [TestCase("123", true, 123)]
-    [TestCase("123 ", true, 123)]
-    [TestCase(" 123", true, 123)]
-    [TestCase(" 123 ", true, 123)]
-    [TestCase("0", true, 0)]
+    private static readonly object[] IsValidIntegerCases =
+    {
+        new TestCaseData("123",true,123),
+        new TestCaseData("123 ",true,123),
+        new TestCaseData(" 123",true,123),
+        new TestCaseData(" 123 ",true,123),
+        new TestCaseData("0",true,0)
+    };
+
+    [TestCaseSource(nameof(IsValidIntegerCases))]
     public void CorrectInput_ReturnsTrue_AndResultingIntegerIsCorrect(
        string input,
        bool expectedResult,
