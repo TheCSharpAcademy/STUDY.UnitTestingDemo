@@ -3,12 +3,14 @@
 int validatedInput;
 bool isInputValid;
 
+var validatorService = new ValidatorService();
+
 do
 {
     Console.Write("Please enter a valid integer: ");
     var input = Console.ReadLine();
 
-    isInputValid = ValidatorHelper.IsValidInteger(input, out validatedInput);
+    isInputValid = validatorService.IsValidInteger(input, out validatedInput);
 
     if (!isInputValid)
     {
