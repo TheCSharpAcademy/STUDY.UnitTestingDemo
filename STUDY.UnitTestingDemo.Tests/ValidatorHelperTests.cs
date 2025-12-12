@@ -9,8 +9,8 @@ public class ValidatorHelperTests
         new TestCaseData(" 123",     true,  123),
         new TestCaseData(" 123 ",    true,  123),
         new TestCaseData("0",        true,  0),
-        new TestCaseData("-50",      true,  -50),
-        new TestCaseData(" -50 ",    true,  -50),
+        new TestCaseData("-50",      false,  -50),
+        new TestCaseData(" -50 ",    false,  -50),
 
         new TestCaseData("",         false, 0),
         new TestCaseData(" ",        false, 0),
@@ -52,13 +52,21 @@ public class ValidatorHelperTests
         new TestCaseData("-2147483649", false, 0),
     };
 
+    private ValidatorService _validationService;
+
+    [SetUp]
+    public void Setup()
+    {
+        _validationService = new ValidatorService(false);
+    }
+
     [TestCaseSource(nameof(IsValidIntegerCases))]
     public void CorrectInput_ReturnsTrue_AndResultingIntegerIsCorrect(
        string input,
        bool expectedResult,
        int expectedValidatedValue)
     {
-        var isValidInteger = ValidatorHelper.IsValidInteger(input, out int validInteger);
+        var isValidInteger = _validationService.IsValidInteger(input, out int validInteger);
 
         Assert.That(isValidInteger, Is.EqualTo(expectedResult));
         Assert.That(validInteger, Is.EqualTo(expectedValidatedValue));
